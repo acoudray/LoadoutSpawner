@@ -1,0 +1,6 @@
+
+LoadoutSpawner-client/.vs/*
+LoadoutSpawner-client/bin/Debug/*
+LoadoutSpawner-client/obj/Debug/*
+LoadoutSpawner-server/modexamples/*
+LoadoutSpawner-server/server/node_modules/*
