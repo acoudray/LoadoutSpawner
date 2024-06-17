@@ -1,4 +1,4 @@
-﻿using Aki.Common.Http;
+using Aki.Common.Http;
 using Aki.Common.Utils;
 using Aki.Reflection.Patching;
 using Comfort.Common;
@@ -63,6 +63,7 @@ namespace LoadoutSpawner.Patches
             if (item == null)
             {
                 NotificationManagerClass.DisplayWarningNotification("No item selected", EFT.Communications.ENotificationDurationType.Default);
+                return;
             }
             var tree = Singleton<ItemFactory>.Instance.TreeToFlatItems(item);
             var profile = (Profile)AccessTools.Field(typeof(EditBuildScreen), "profile_0").GetValue(instance);
