@@ -8,7 +8,6 @@ import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEve
 import { TProfileChanges } from "@spt-aki/models/eft/itemEvent/IItemEventRouterBase";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
 import { SaveServer } from "@spt-aki/servers/SaveServer";
 import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
 
@@ -73,7 +72,6 @@ class Mod implements IPreAkiLoadMod {
             output
         );
         this.saveServer.saveProfile(sessionId);
-        this.logger.info(JSON.stringify(output.profileChanges, null, 2));
         return JSON.stringify(output.profileChanges[sessionId]);
     }
 }

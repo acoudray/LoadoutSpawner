@@ -4,19 +4,12 @@ using Aki.Reflection.Patching;
 using Comfort.Common;
 using EFT;
 using EFT.InventoryLogic;
-using EFT.InventoryLogic.BackendInventoryInteraction;
 using EFT.UI;
-using EFTApi;
 using HarmonyLib;
 using Newtonsoft.Json;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -55,7 +48,7 @@ namespace LoadoutSpawner.Patches
         public static void BuildWeapon(EditBuildScreen instance)
         {
             Item item = null;
-            var traverse = Traverse.Create(instance);
+            Traverse traverse = Traverse.Create(instance);
             if (traverse.Property("Item").PropertyExists())
                 item = (Item)AccessTools.Property(typeof(EditBuildScreen), "Item").GetValue(instance);
             if (traverse.Field("Item").FieldExists())
@@ -66,17 +59,19 @@ namespace LoadoutSpawner.Patches
                 return;
             }
             var tree = Singleton<ItemFactory>.Instance.TreeToFlatItems(item);
-            var profile = (Profile)AccessTools.Field(typeof(EditBuildScreen), "profile_0").GetValue(instance);
-            var inventoryController = (InventoryControllerClass)AccessTools.Property(typeof(EditBuildScreen), "InventoryController").GetValue(instance);
-            var questController = EFTHelpers._QuestControllerHelper.QuestController;
+            Profile profile = (Profile)AccessTools.Field(typeof(EditBuildScreen), "profile_0").GetValue(instance);
+            InventoryControllerClass inventoryController = (InventoryControllerClass)AccessTools.Property(typeof(EditBuildScreen), "InventoryController").GetValue(instance);
+            ISession session = Singleton<ClientApplication<ISession>>.Instance.GetClientBackEndSession();
+            GClass3206 questController = new GClass3206(profile, inventoryController, session, false);
+            RagFairClass ragFair = session.RagFair;
             var res = RequestHandler.PostJson("/loadout-spawner/weapon", new
             {
                 items = tree
             }.ToJson(_defaultJsonConverters));
             if (res != null)
             {
-                ProfileChangesPocoClass profileChangesPocoClass = JsonConvert.DeserializeObject<ProfileChangesPocoClass>(res);
-                GInterface142 profileUpdateClass = new GClass1841(profile, (GClass2764)inventoryController, (GClass3206)questController, EFTHelpers._SessionHelper.Session.RagFair);
+                ProfileChangesPocoClass profileChangesPocoClass = Json.Deserialize<ProfileChangesPocoClass>(res);
+                GInterface142 profileUpdateClass = new GClass1841(profile, (GClass2764)inventoryController, (GClass3206)questController, ragFair);
                 profileUpdateClass.UpdateProfile(profileChangesPocoClass);
                 NotificationManagerClass.DisplayMessageNotification("Weapon successfully added to your inventory", EFT.Communications.ENotificationDurationType.Default, EFT.Communications.ENotificationIconType.Default);
             } else
