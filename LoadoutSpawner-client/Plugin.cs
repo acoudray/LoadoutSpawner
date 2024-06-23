@@ -16,6 +16,7 @@ namespace LoadoutSpawner
 
             //uncomment the line below and replace "PatchClassName" with the class name you gave your patch. Patches must be enabled like this to work.
             new WeaponSpawner().Enable();
+            new LoadoutSpawner.Patches.LoadoutSpawner().Enable();
         }
 
     }

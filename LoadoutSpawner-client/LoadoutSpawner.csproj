@@ -63,6 +63,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EquipmentSpawnerComponent.cs" />
+    <Compile Include="Patches\LoadoutSpawner.cs" />
     <Compile Include="Patches\WeaponSpawner.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,7 +72,9 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\BepInEx\plugins\$(TargetFileName)"</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\BepInEx\plugins\$(TargetFileName)"
+copy "$(TargetPath)" "D:\Games\SPT AKI 3.8.3\BepInEx\plugins"
+copy "$(TargetPath)" "D:\Games\SPT AKI 3.8.3 test\BepInEx\plugins"</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">

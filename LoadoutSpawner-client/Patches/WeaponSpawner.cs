@@ -1,6 +1,7 @@
 using Aki.Common.Http;
 using Aki.Common.Utils;
 using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 using Comfort.Common;
 using EFT;
 using EFT.InventoryLogic;
@@ -10,6 +11,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +20,6 @@ namespace LoadoutSpawner.Patches
     internal class WeaponSpawner : ModulePatch
     {
         private static JsonConverter[] _defaultJsonConverters;
-        private readonly Dictionary<string, GInterface142> dictionary_0 = new Dictionary<string, GInterface142>();
 
         protected override MethodBase GetTargetMethod()
         {
@@ -32,7 +33,8 @@ namespace LoadoutSpawner.Patches
         public static void PatchPostfix(EditBuildScreen __instance)
         {
             var publishButton = Traverse.Create(__instance).Field("_publishButton").GetValue<Button>();
-            var publishCanvasGroup = GameObject.Find("PublishBuildtButton").GetComponent<CanvasGroup>();
+            //var _publishCanvasGroup = GameObject.Find("PublishBuildtButton").GetComponent<CanvasGroup>();
+            var publishCanvasGroup = __instance.transform.Find("ButtonsPanel/ContextButtons/PublishBuildtButton").GetComponent<CanvasGroup>();
             if (publishButton != null)
             {
                 publishButton.enabled = true;
@@ -74,16 +76,12 @@ namespace LoadoutSpawner.Patches
                 GInterface142 profileUpdateClass = new GClass1841(profile, (GClass2764)inventoryController, (GClass3206)questController, ragFair);
                 profileUpdateClass.UpdateProfile(profileChangesPocoClass);
                 NotificationManagerClass.DisplayMessageNotification("Weapon successfully added to your inventory", EFT.Communications.ENotificationDurationType.Default, EFT.Communications.ENotificationIconType.Default);
-            } else
+            }
+            else
             {
                 NotificationManagerClass.DisplayWarningNotification("Error while trying to add item", EFT.Communications.ENotificationDurationType.Default);
             }
             return;
-        }
-
-        public static void DebugOnClick()
-        {
-            Plugin.LogSource.LogInfo("Button clicked");
         }
     }
 
