@@ -7,10 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using TMPro;
-using UnityEngine.UI;
 using UnityEngine;
 using Comfort.Common;
 using EFT.InventoryLogic;
@@ -53,7 +50,7 @@ namespace LoadoutSpawner.Patches
             }
         }
 
-        public static void SpawnLoadout(EquipmentBuildsScreen instance)
+        private static void SpawnLoadout(EquipmentBuildsScreen instance)
         {
             try
             {

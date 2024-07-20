@@ -47,7 +47,7 @@ namespace LoadoutSpawner.Patches
             }
         }
 
-        public static void BuildWeapon(EditBuildScreen instance)
+        private static void BuildWeapon(EditBuildScreen instance)
         {
             Item item = null;
             Traverse traverse = Traverse.Create(instance);

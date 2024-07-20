@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="EquipmentSpawnerComponent.cs" />
     <Compile Include="Patches\LoadoutSpawner.cs" />
+    <Compile Include="Patches\RandomLoadout.cs" />
     <Compile Include="Patches\WeaponSpawner.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
